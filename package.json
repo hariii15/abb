@@ -1,0 +1,14 @@
+{
+  "name": "kubemind-workspace",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "firebase-admin": "^13.9.0"
+  },
+  "scripts": {
+    "dev:campus": "npx concurrently -c auto -n gw,auth,energy,cctv,notify,storage,web \"npm run dev --prefix services/api-gateway\" \"npm run dev --prefix services/auth-service\" \"npm run dev --prefix services/energy-service\" \"npm run dev --prefix services/cctv-service\" \"npm run dev --prefix services/notification-service\" \"npm run dev --prefix services/storage-service\" \"npm run dev --prefix apps/campus-web\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
