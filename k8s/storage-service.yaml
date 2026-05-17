@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-service
+  labels:
+    app: storage-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storage-service
+  template:
+    metadata:
+      labels:
+        app: storage-service
+    spec:
+      containers:
+      - name: storage-service
+        image: campus-storage-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4050
+        env:
+        - name: STORAGE_SERVICE_PORT
+          value: "4050"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: storage-service
+spec:
+  selector:
+    app: storage-service
+  ports:
+    - protocol: TCP
+      port: 4050
+      targetPort: 4050

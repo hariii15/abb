@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: energy-service
+  labels:
+    app: energy-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: energy-service
+  template:
+    metadata:
+      labels:
+        app: energy-service
+    spec:
+      containers:
+      - name: energy-service
+        image: campus-energy-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4020
+        env:
+        - name: ENERGY_SERVICE_PORT
+          value: "4020"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: energy-service
+spec:
+  selector:
+    app: energy-service
+  ports:
+    - protocol: TCP
+      port: 4020
+      targetPort: 4020

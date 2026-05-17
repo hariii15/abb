@@ -2,21 +2,25 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { apiGet, apiPost } from "@/lib/api";
-import type { AttendanceLog } from "@/lib/types";
+import type { AttendanceLog, User } from "@/lib/types";
 
 export default function AttendancePage() {
+  const [users, setUsers] = useState<User[]>([]);
   const [logs, setLogs] = useState<AttendanceLog[]>([]);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [studentId, setStudentId] = useState("STU-10422");
-  const [name, setName] = useState("A. Kumar");
+  const [selectedUserIndex, setSelectedUserIndex] = useState(0);
   const [gate, setGate] = useState("North Gate");
 
   const load = useCallback(async () => {
     setErr(null);
     try {
-      const res = await apiGet<{ items: AttendanceLog[] }>("/attendance/recent?limit=80");
+      const [res, usersRes] = await Promise.all([
+        apiGet<{ items: AttendanceLog[] }>("/attendance/recent?limit=80"),
+        apiGet<{ items: User[] }>("/users")
+      ]);
       setLogs(res.items);
+      setUsers(usersRes.items);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Load failed");
     }
@@ -45,7 +49,8 @@ export default function AttendancePage() {
     setBusy(true);
     setErr(null);
     try {
-      await apiPost("/attendance/scan", { student_id: studentId, name, gate });
+      const user = users[selectedUserIndex] || { id: "unknown", name: "Unknown" };
+      await apiPost("/attendance/scan", { student_id: user.id, name: user.name, gate });
       await load();
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Scan failed");
@@ -83,22 +88,17 @@ export default function AttendancePage() {
           <h3>Simulate scan</h3>
           <div style={{ display: "grid", gap: "0.5rem", marginTop: "0.5rem" }}>
             <label className="muted">
-              Student ID
-              <input
+              Select User
+              <select
                 className="inp"
-                value={studentId}
-                onChange={(e) => setStudentId(e.target.value)}
+                value={selectedUserIndex}
+                onChange={(e) => setSelectedUserIndex(Number(e.target.value))}
                 style={{ width: "100%", marginTop: "0.25rem" }}
-              />
-            </label>
-            <label className="muted">
-              Name
-              <input
-                className="inp"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                style={{ width: "100%", marginTop: "0.25rem" }}
-              />
+              >
+                {users.map((u, i) => (
+                  <option key={u.id} value={i}>{u.name} ({u.id})</option>
+                ))}
+              </select>
             </label>
             <label className="muted">
               Gate
@@ -115,10 +115,10 @@ export default function AttendancePage() {
           </div>
         </div>
         <div className="card">
-          <h3>Active students (session)</h3>
-          <div className="metric">{active}</div>
+          <h3>User Insights</h3>
+          <div className="metric">{active} / {users.length}</div>
           <p className="muted" style={{ margin: "0.5rem 0 0" }}>
-            Distinct student IDs in the recent log window.
+            Active users vs total registered users.
           </p>
         </div>
       </div>

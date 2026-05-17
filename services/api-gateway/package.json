@@ -1,15 +1,15 @@
 {
-  "name": "@smart-campus/api-gateway",
+  "name": "api-gateway",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/gateway.js",
-    "start": "node src/gateway.js"
+    "dev": "node index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "firebase-admin": "^13.0.2",
-    "kubemind-workspace": "file:../.."
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.3"
   }
 }

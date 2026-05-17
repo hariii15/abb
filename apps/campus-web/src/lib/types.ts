@@ -23,6 +23,12 @@ export type OverviewResponse = {
   cctv: { total: number; online: number; last_motion_at: string | null };
 };
 
+export type User = {
+  id: string;
+  name: string;
+  role: string;
+};
+
 export type AttendanceLog = {
   id: string;
   student_id: string;

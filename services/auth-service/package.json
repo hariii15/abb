@@ -1,16 +1,14 @@
 {
-  "name": "@smart-campus/auth-service",
+  "name": "auth-service",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/index.js",
-    "start": "node src/index.js"
+    "dev": "node index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "firebase-admin": "^13.0.2",
-    "kubemind-workspace": "file:../..",
-    "uuid": "^11.0.3"
+    "express": "^5.1.0"
   }
 }

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cctv-service
+  labels:
+    app: cctv-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cctv-service
+  template:
+    metadata:
+      labels:
+        app: cctv-service
+    spec:
+      containers:
+      - name: cctv-service
+        image: campus-cctv-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4030
+        env:
+        - name: CCTV_SERVICE_PORT
+          value: "4030"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cctv-service
+spec:
+  selector:
+    app: cctv-service
+  ports:
+    - protocol: TCP
+      port: 4030
+      targetPort: 4030
