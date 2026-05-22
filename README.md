@@ -17,12 +17,12 @@ graph TD
     classDef ai fill:#f59e0b,stroke:#78350f,stroke-width:2px,color:#fff;
 
     %% Client and Dashboards
-    Client[Client / Operator]
-    PLCDash[PLC Dashboard (Next.js)]:::frontend
-    AIDash[AI Dashboard (Next.js)]:::frontend
+    Client["Client / Operator"]
+    PLCDash["PLC Dashboard (Next.js)"]:::frontend
+    AIDash["AI Dashboard (Next.js)"]:::frontend
 
     %% Services
-    APIGW(API Gateway):::gateway
+    APIGW("API Gateway"):::gateway
     PLC[PLC Controller]:::service
     Sensor[Sensor Service]:::service
     Motor[Motor Service]:::service
