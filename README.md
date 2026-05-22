@@ -4,7 +4,7 @@ Welcome to the **Industrial PLC Automation** project! This repository contains a
 
 The system is integrated with the **KubeMind AI Platform**, an autonomous site reliability engineering (SRE) engine that uses AI to monitor cluster health, detect anomalies, predict failures, and suggest autonomous remediation strategies.
 
-## 🏗️ System Architecture
+## System Architecture
 
 The architecture is built upon an API Gateway pattern that routes requests to individual industrial microservices. The state and metrics of these microservices are actively monitored by the KubeMind AI metrics engine.
 
@@ -64,7 +64,7 @@ graph TD
     KubeMind -.->|Provides AI Insights| AIDash
 ```
 
-## 🚀 Key Components
+## Key Components
 
 1. **API Gateway (`api-gateway`)**: Centralized entry point on port 4000. Handles routing and WebSocket connections.
 2. **PLC Controller (`plc-controller`)**: The "brain" of the factory line, dispatching commands to actuators and reading from sensors.
@@ -81,7 +81,7 @@ graph TD
    - **PLC Dashboard**: Real-time factory floor UI.
    - **AI Dashboard**: Real-time cluster topology, anomaly detection, and AI SRE recommendations.
 
-## 🛠️ How to Run Locally
+## How to Run Locally
 
 You can launch the entire stack using the provided startup script. This will boot all microservices, Next.js dashboards, and the Python FastAPI metrics engine concurrently.
 
@@ -96,7 +96,7 @@ chmod +x ./start_services.sh
 **Note for KubeMind AI Features:** 
 To enable real-time metrics gathering for the AI dashboard, you must have your local Kubernetes cluster (e.g., `minikube`) running and `kube-prometheus-stack` installed.
 
-## ☸️ Kubernetes Deployment
+## Kubernetes Deployment
 
 To deploy the services to your Kubernetes cluster:
 
@@ -108,6 +108,6 @@ To deploy the services to your Kubernetes cluster:
 ./scripts/deploy-plc.sh
 ```
 
-## 🛑 Stopping the Services
+## Stopping the Services
 
 If you ran the services locally using `./start_services.sh`, simply press `Ctrl+C` in the terminal running the script. The script's trap will automatically capture the signal and gracefully terminate all background processes.
