@@ -5,6 +5,7 @@ class AgentState(TypedDict):
     # Inputs
     metrics_summary: Dict[str, Any]
     metrics_history: Annotated[List[Dict[str, Any]], add]
+    skip_llm: bool
     
     # Layer 1: Deterministic Outputs
     anomalies: Annotated[List[Dict[str, Any]], add]

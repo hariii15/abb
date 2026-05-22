@@ -21,8 +21,9 @@ class DependencyEngine:
         
         # 1. Define Core Services (The Backbone)
         services = [
-            "api-gateway", "auth-service", "energy-service", 
-            "cctv-service", "notification-service", "storage-service"
+            "api-gateway", "plc-controller", "sensor-service", 
+            "motor-service", "conveyor-service", "robot-arm-service",
+            "alarm-service", "energy-service", "notification-service"
         ]
         
         # 2. Add Nodes with Health Status
@@ -51,11 +52,14 @@ class DependencyEngine:
 
         # 3. Cascading Risk: If a dependent is critical, source becomes warning
         dependencies = [
-            ("api-gateway", "auth-service", "Auth Check"),
-            ("api-gateway", "energy-service", "Sensor Data"),
-            ("api-gateway", "cctv-service", "Video Feed"),
-            ("api-gateway", "notification-service", "Alerts"),
-            ("auth-service", "storage-service", "User Data"),
+            ("api-gateway", "plc-controller", "Commands"),
+            ("api-gateway", "sensor-service", "Metrics"),
+            ("api-gateway", "energy-service", "Energy"),
+            ("plc-controller", "motor-service", "Motor Control"),
+            ("plc-controller", "conveyor-service", "Conveyor Control"),
+            ("plc-controller", "robot-arm-service", "Robot Control"),
+            ("sensor-service", "alarm-service", "Thresholds"),
+            ("alarm-service", "notification-service", "Alerts"),
         ]
 
         for source, target, label in dependencies:
@@ -98,12 +102,15 @@ class DependencyEngine:
         
         # Simple layout positioning
         pos = {
-            "api-gateway": {"x": 250, "y": 0},
-            "auth-service": {"x": 100, "y": 150},
-            "energy-service": {"x": 250, "y": 150},
-            "cctv-service": {"x": 400, "y": 150},
-            "notification-service": {"x": 550, "y": 150},
-            "storage-service": {"x": 100, "y": 300},
+            "api-gateway": {"x": 350, "y": 0},
+            "plc-controller": {"x": 350, "y": 150},
+            "sensor-service": {"x": 150, "y": 150},
+            "energy-service": {"x": -50, "y": 150},
+            "motor-service": {"x": 150, "y": 300},
+            "conveyor-service": {"x": 350, "y": 300},
+            "robot-arm-service": {"x": 550, "y": 300},
+            "alarm-service": {"x": 550, "y": 150},
+            "notification-service": {"x": 750, "y": 150},
         }
 
         for node, data in graph.nodes(data=True):

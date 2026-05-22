@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import pods, namespaces, services, dependencies, anomalies, recommendations, forecasts
+from .routes import pods, namespaces, services, dependencies, anomalies, recommendations, forecasts, debug
 from .websocket.stream import router as websocket_router
 
 app = FastAPI(title="Smart Campus Metrics Engine", version="1.0.0")
@@ -20,6 +20,7 @@ app.include_router(dependencies.router, prefix="/dependencies", tags=["Dependenc
 app.include_router(anomalies.router, prefix="/anomalies", tags=["Anomalies"])
 app.include_router(recommendations.router, prefix="/recommendations", tags=["Recommendations"])
 app.include_router(forecasts.router, prefix="/forecasts", tags=["Forecasts"])
+app.include_router(debug.router, prefix="/debug", tags=["Debug"])
 app.include_router(websocket_router, tags=["WebSocket"])
 
 @app.get("/health")

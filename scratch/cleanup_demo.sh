@@ -22,4 +22,7 @@ if [ -n "$STORAGE_POD" ]; then
     kubectl exec $STORAGE_POD -- rm -f /tmp/stress_file || echo "No storage stress file to clean."
 fi
 
+# Clean up host sentinel file
+rm -f /tmp/storage_stressed
+
 echo "✅ Cleanup complete! Services should return to normal metrics within the next query cycles."

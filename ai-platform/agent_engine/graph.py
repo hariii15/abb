@@ -6,8 +6,10 @@ from agent_engine.agents.higher_agents import root_cause_agent, recommendation_a
 
 def anomaly_gatekeeper(state: AgentState):
     """
-    Conditional router: If no anomalies were found by Layer 1, skip Layer 3 (LLMs) completely.
+    Conditional router: If no anomalies were found by Layer 1, or if skip_llm is true, skip Layer 3 (LLMs).
     """
+    if state.get("skip_llm", False):
+        return "end"
     if len(state.get("anomalies", [])) > 0:
         return "reasoning_layer"
     return "end"

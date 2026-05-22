@@ -1,0 +1,11 @@
+{
+  "name": "plc-services-root",
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "npm install --prefix api-gateway && npm install --prefix plc-controller && npm install --prefix sensor-service && npm install --prefix motor-service && npm install --prefix conveyor-service && npm install --prefix robot-arm-service && npm install --prefix alarm-service && npm install --prefix energy-service && npm install --prefix notification-service",
+    "start": "concurrently \"npm run start --prefix api-gateway\" \"npm run start --prefix plc-controller\" \"npm run start --prefix sensor-service\" \"npm run start --prefix motor-service\" \"npm run start --prefix conveyor-service\" \"npm run start --prefix robot-arm-service\" \"npm run start --prefix alarm-service\" \"npm run start --prefix energy-service\" \"npm run start --prefix notification-service\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

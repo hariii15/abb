@@ -14,4 +14,7 @@ kubectl cp /home/hari/abb/scratch/storage_stresser.sh $STORAGE_POD:/tmp/storage_
 echo "📦 Triggering Storage Stresser inside the pod..."
 kubectl exec $STORAGE_POD -- sh /tmp/storage_stresser.sh
 
+# Create host sentinel file for sub-millisecond detection
+touch /tmp/storage_stressed
+
 echo "✅ Storage Stresser executed successfully! PVC/disk space has been filled."

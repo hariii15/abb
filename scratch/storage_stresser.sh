@@ -11,6 +11,6 @@ echo "Targeting Storage Service at ${TARGET_DIR}..."
 
 # Create a 400MB file to fill up the likely small demo PVC
 echo "Writing 400MB to ${FILE_NAME}..."
-dd if=/dev/zero of=${FILE_NAME} bs=1M count=400 conv=fdatasync
+dd if=/dev/zero of=${FILE_NAME} bs=1M count=400
 
 echo "Storage pressure applied. Run 'rm ${FILE_NAME}' to recover."

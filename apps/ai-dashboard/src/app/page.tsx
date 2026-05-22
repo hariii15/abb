@@ -147,7 +147,7 @@ export default function AIDashboard() {
 
     // Auto-reconnecting WebSocket
     const connect = () => {
-      const ws = new WebSocket("ws://localhost:8000/ws/stream");
+      const ws = new WebSocket("ws://127.0.0.1:8000/ws/stream");
       wsRef.current = ws;
       setWsStatus("CONNECTING");
 
@@ -215,9 +215,13 @@ export default function AIDashboard() {
       ws.onerror = () => ws.close();
     };
 
-    connect();
+    // Delay WebSocket connection slightly to let the server clear its HTTP request queue
+    const initialDelayTimer = setTimeout(() => {
+      connect();
+    }, 1000);
 
     return () => {
+      clearTimeout(initialDelayTimer);
       if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
       wsRef.current?.close();
     };

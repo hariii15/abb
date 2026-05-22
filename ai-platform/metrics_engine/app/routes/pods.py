@@ -107,26 +107,39 @@ def get_pod_summary():
     # Map by pod name
     res = {}
     
-    # Use CPU data as the base list of pods
-    for item in cpu_data:
-        pod = item['pod']
+    # Gather all unique pods
+    all_pods = set()
+    for item in cpu_data: all_pods.add(item.get('pod'))
+    for item in mem_data: all_pods.add(item.get('pod'))
+    for item in restart_data: all_pods.add(item.get('pod'))
+    for item in net_data: all_pods.add(item.get('pod'))
+    
+    all_pods.discard(None)
+    
+    # Initialize base stats for all known pods
+    for pod in all_pods:
         res[pod] = {
-            "cpu": item['value'],
-            "memory": 0,
+            "cpu": 0.0,
+            "memory": 0.0,
             "restarts": 0,
             "network": {"rx": 0, "tx": 0},
-            "storage": 0
+            "storage": 0.0
         }
     
+    # Enrich with CPU
+    for item in cpu_data:
+        if item.get('pod') in res:
+            res[item['pod']]["cpu"] = item.get('value', 0.0)
+            
     # Enrich with Memory
     for item in mem_data:
-        if item['pod'] in res:
-            res[item['pod']]["memory"] = item['value']
+        if item.get('pod') in res:
+            res[item['pod']]["memory"] = item.get('value', 0.0)
             
     # Enrich with Restarts
     for item in restart_data:
-        if item['pod'] in res:
-            res[item['pod']]["restarts"] = item['restarts']
+        if item.get('pod') in res:
+            res[item['pod']]["restarts"] = item.get('restarts', 0)
 
     # Enrich with Network (with Inference Fallback)
     for pod, stats in res.items():
@@ -149,7 +162,7 @@ def get_pod_summary():
             res[pod]["storage"] = real_storage['usage_percent']
         else:
             # BASELINE: 15.4% for known volume-heavy services
-            if any(svc in pod for svc in ["storage", "auth", "prometheus"]):
+            if any(svc in pod for svc in ["energy", "prometheus"]):
                 res[pod]["storage"] = 15.4
         
     return {"status": "success", "data": res}
