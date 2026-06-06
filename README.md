@@ -3,7 +3,7 @@
 Welcome to the **Industrial PLC Automation** project! This repository contains a microservices-based architecture designed to simulate, monitor, and control an automated manufacturing plant using modern web technologies and Kubernetes.
 
 The system is integrated with the **KubeMind AI Platform**, an autonomous site reliability engineering (SRE) engine that uses AI to monitor cluster health, detect anomalies, predict failures, and suggest autonomous remediation strategies.
-
+   
 ## System Architecture 
 
 The architecture is built upon an API Gateway pattern that routes requests to individual industrial microservices. The state and metrics of these microservices are actively monitored by the KubeMind AI metrics engine.
