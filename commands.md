@@ -12,7 +12,7 @@ cd apps/plc-dashboard
 npm run dev
 
 curl http://127.0.0.1:8000/dependencies
-
+                         
 bash /home/hari/abb/scratch/trigger_cpu_spike.sh
 bash /home/hari/abb/scratch/trigger_memory_leak.sh
 bash /home/hari/abb/scratch/trigger_storage_stress.sh
