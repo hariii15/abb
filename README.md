@@ -99,7 +99,7 @@ To enable real-time metrics gathering for the AI dashboard, you must have your l
 ## Kubernetes Deployment
 
 To deploy the services to your Kubernetes cluster:
-
+          
 ```bash
 # Build Docker images for all services
 ./scripts/build-plc-images.sh
